@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+
+    <script type="text/javascript"
+            src="static/jq/jquery-2.2.3.min.js"></script>
+</head>
+<body>
+<h1>贴吧--注册</h1>
+<form action="">
+    <input type="text" name="username">
+    <input type="text" name="password">
+    <input type="text" name="confirmpsw">
+</form>
+<button id="cmt">注册</button>
+<span id="msg"></span>
+
+<script>
+    function getCookie(name) {
+        var r = document.cookie.match("\\b" + name + "=([^;]*)\\b");
+        alert(r, r[1]);
+        return r ? r[1] : undefined;
+    }
+    $(function(){
+        $("#cmt").click(function(){
+            $c = getCookie('_xsrf');
+            $.ajax({
+                url: "/regist",
+                type: "POST",
+                allowDomain: true,
+                data: {
+                    _xsrf: $c,
+                    username: $("input[name=username]").val(),
+                    password: $("input[name=password]").val(),
+                    confirmpsw: $("input[name=confirmpsw]").val()
+                },
+                success: function(resp){
+                    console.log(resp)
+                    var res = jQuery.parseJSON(resp);
+
+                    console.log(res)
+                    if(res.status == 1){
+                        alert("登录成功")
+                        location.href="/login"
+                    }else{
+//                        console.log(res.msg);
+                        $("#msg").text(res.msg)
+                    }
+                },
+                error: function(){
+                    $("#msg").text("数据传送失败！！！")
+                }
+            })
+        })
+    })
+</script>
+</body>
+</html>

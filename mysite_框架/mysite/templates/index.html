@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<h1>首页————贴吧</h1>
+
+<h3><a href="/login">登录</a></h3>
+<h3><a href="/regist">注册</a></h3>
+
+
+ {% for each in titles %}
+<dl>
+
+    <dt>{{each[0]}}</dt>
+    <dd>{{each[1]}}</dd>
+    <dd proid="{{each[0]}}"></dd>
+    <button class="pinglun" productid='{{each[0]}}'>发表评论</button>
+
+    <!--编辑区-->
+
+    <div style="background: #eee;">
+        <input type="text" class="message-text">
+    </div>
+
+
+</dl>
+{% end %}
+
+<!--向后台发送数据-->
+<script type="text/javascript">
+$(document).ready(function(){
+  $(".pinglun").click(function(){
+
+//  $(this).hide();
+//      选取触发时间的兄弟节点的子节点
+      var $content1=($(this)).next().children().val()
+//  var $content = $("#message-text").val()
+      var $product_id=($(this)).attr("productid")
+      alert ($content1)
+      alert ($content)
+      alert ($product_id)
+  $.ajax({
+      url:'/pinglun',
+      type:'post',
+      data:{
+          "content":$content1,
+      "product_id":$product_id,
+      },
+      success:function (msg) {
+          console.log(msg)
+      },
+      error:function () {
+          console.log("发表失败")
+      }
+  })
+      </script>
+</body>
+</html>

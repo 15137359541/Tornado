@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>贴吧用户登录</h1>
+<form action="" method="post">
+    {% module xsrf_form_html() %}
+    <input type="text" name="username">
+    <input type="text" name="password">
+    <input type="submit" value="登录">
+</form>
+</body>
+</html>
